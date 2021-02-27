@@ -30,5 +30,16 @@ pipeline {
               sh 'docker push drobovictor/dz11prod'
             }
           }
+          stage('Pull docker image and run container on production environment') {
+      steps {
+        //тут используется авторизация по паролю
+        sshagent(['593e1ec3-b17b-4a3b-96bd-d62d8a34003b']) {
+          sh '''ssh -o StrictHostKeyChecking=no root@35.222.39.134 << EOF
+          docker pull drobovictor/dz11prod
+          docker run --rm --name prod-webapp-deployed -d -p 8888:8080 drobovictor/dz11prod
+          EOF'''
+          }
         }
+      }
      }
+}
