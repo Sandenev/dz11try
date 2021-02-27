@@ -1,6 +1,6 @@
 pipeline {
 
-     agent {
+     agent  any {
         docker {
           image 'drobovictor/dz11prep'
           //arguments for mapping sockets and user root
